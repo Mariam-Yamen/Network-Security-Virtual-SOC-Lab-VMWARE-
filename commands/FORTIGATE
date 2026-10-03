@@ -1,1 +1,81 @@
+FGVMEV2GQ0WLV305 # config system interface
+FGVMEV2GQ0WLV305 (interface) # edit port2
+FGVMEV2GQ0WLV305 (port2) # set mode static
+FGVMEV2GQ0WLV305 (port2) # set ip 10.10.10.1 255.255.255.0
+FGVMEV2GQ0WLV305 (port2) # set allowaccess ping http https ssh
+FGVMEV2GQ0WLV305 (port2) # set alias LAN-SALES
 
+FGVMEV2GQ0WLV305 (port2) # next
+FGVMEV2GQ0WLV305 (interface) # edit port3
+FGVMEV2GQ0WLV305 (port3) # set mode static
+FGVMEV2GQ0WLV305 (port3) # set ip 10.10.20.1 255.255.255.0
+FGVMEV2GQ0WLV305 (port3) # set allowaccess ping http https ssh
+FGVMEV2GQ0WLV305 (port3) # set alias IT
+
+FGVMEV2GQ0WLV305 (port3) # next
+FGVMEV2GQ0WLV305 (interface) # edit port1
+FGVMEV2GQ0WLV305 (port1) # set mode dhcp
+FGVMEV2GQ0WLV305 (port1) # set allowaccess ping http https ssh
+FGVMEV2GQ0WLV305 (port1) # set alias WAN
+FGVMEV2GQ0WLV305 (port1) # next
+FGVMEV2GQ0WLV305 (interface) # end
+
+FGVMEV2GQ0WLV305 # show system interface port1
+config system interface
+  edit "port1"
+    set vdom "root"
+    set mode dhcp
+    set allowaccess ping https ssh http
+    set type physical
+    set alias "WAN"
+    set snmp-index 1
+  next
+end
+
+FGVMEV2GQ0WLV305 # show system interface port2
+config system interface
+  edit "port2"
+    set vdom "root"
+    set ip 10.10.10.1 255.255.255.0
+    set allowaccess ping https ssh http
+    set type physical
+    set alias "LAN-SALES"
+    set snmp-index 2
+  next
+end
+
+FGVMEV2GQ0WLV305 # show system interface port3
+config system interface
+  edit "port3"
+    set vdom "root"
+    set ip 10.10.20.1 255.255.255.0
+    set allowaccess ping https ssh http
+    set type physical
+    set alias "IT"
+    set snmp-index 3
+  next
+end
+
+FGVMEV2GQ0WLV305 # execute ping google.com
+PING google. com (142.251.36.206): 56 data bytes
+64 bytes from 142.251.36.206: icmp_seq=0 ttl=128 time=44.3 MS
+64 bytes from 142.251.36.206: icmp_seq=1 ttl=128 time=46.5 MS
+64 bytes from 142.251.36.206: icmp_seq=2 ttl=128 time=46.0 MS
+64 bytes from 142.251.36.206: icmp_seq=3 ttl=128 time=74.8 MS
+64 bytes from 142.251.36.206: icmp_seq=4 ttl=128 time=42.6 MS
+
+google. com ping statistics
+5 packets transmitted, 5 packets received, 0% packet loss
+round-trip Min/avg/Max = 42.6/50.8/74.8 MS
+
+FGVMEV2GQ0WLV305 # execute ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8): 56 data bytes
+64 bytes from 8.8.8.8: icmp_seq=0 ttl=128 time=45.6 MS
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=128 time=82.5 MS
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=128 time=45.5 MS
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=128 time=45.7 MS
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=128 time=44.7 MS
+
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 5 packets received, 0% packet loss
+round-trip Min/avg/Max = 44.7/52.8/82.5 MS
