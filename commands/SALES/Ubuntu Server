@@ -1,0 +1,50 @@
+sales@serversales:^$ sudo nano /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+[sudo] password for sales:
+
+GNU nano 6.2       /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+network : {config: disabled}
+
+sales@serversales:^$ sudo nano /etc/netplan/50-cloud-init.yaml
+
+GNU nano 6.2         /etc/netplan/50-cloud-init.yaml
+# This file is generated from information provided by the datasource. Changes
+# to it will not persist across an instance reboot. To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+ethernets:
+ens33:
+dhcp4: false
+addresses:
+- 10.10.10.5/24
+gateway4: 10.10.10.1
+nameservers :
+addresses: [8.8.8.8]
+version: 2
+
+sales@serversales :~ $ ping 10.10.10.1
+PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
+64 bytes from 10.10.10.1: icmp_seq=1 ttl=255 time=1.77 ms
+64 bytes from 10.10.10.1: icmp_seq=2 ttl=255 time=1.70 ms
+64 bytes from 10.10.10.1: icmp_seq=3 ttl=255 time=1.57 ms
+
+---10.10.10.1 ping statistics---
+3 packets transmitted, 3 received, 0% packet loss, time 2004ms
+rtt min/avg/max/mdev = 1.567/1.679/1.773/0.085 ms
+
+sales@serversales :~ $ ping 10.10.20.1
+PING 10.10.20.1 (10.10.20.1) 56(84) bytes of data.
+64 bytes from 10.10.20.1: icmp_seq=1 ttl=255 time=13.3 ms
+64 bytes from 10.10.20.1: icmp_seq=2 ttl=255 time=1.76 ms
+64 bytes from 10.10.20.1: icmp_seq=3 ttl=255 time=1.19 ms
+^C
+---10.10.20.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2004ms
+rtt min/avg/max/mdev = 1.194/5.402/13.250/5.553 ms
+
+sales@serversales :~ $ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+^C
+--- 8.8.8.8 ping statistics ---
+7 packets transmitted, 0 received, 100% packet loss, time 6144ms
