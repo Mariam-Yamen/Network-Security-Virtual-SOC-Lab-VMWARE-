@@ -22,7 +22,7 @@ gateway4: 10.10.10.1
 nameservers :
 addresses: [8.8.8.8]
 version: 2
-
+sales@serversales :~ $ sudo netplan apply
 sales@serversales :~ $ ping 10.10.10.1
 PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
 64 bytes from 10.10.10.1: icmp_seq=1 ttl=255 time=1.77 ms
