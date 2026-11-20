@@ -1,0 +1,51 @@
+mariam-yamen@Mariam-Ubento :~ $ sudo nano /etc/netplan/01-network-manager-all.yaml
+
+GNU nano 7.2 /etc/netplan/01-network-manager-all.yaml
+
+Let NetworkManager manage all devices on this system
+network:
+  version: 2
+  ethernets:
+    ens33:
+      dhcp4: false
+      addresses:
+        - 10.10.10.4/24
+      gateway4: 10.10.10.1
+      nameservers:
+        addresses: [8.8.8.8]
+
+mariam-yamen@Mariam-Ubento :~ $ sudo netplan apply
+mariam-yamen@Mariam-Ubento :~ $ ping 10.10.10.1
+PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
+64 bytes from 10.10.10.1: icmp_seq=1 ttl=255 time=1.64 ms
+64 bytes from 10.10.10.1: icmp_seq=2 ttl=255 time=0.405 ms
+64 bytes from 10.10.10.1: icmp_seq=3 ttl=255 time=0.728 ms
+64 bytes from 10.10.10.1: icmp_seq=4 ttl=255 time=0.888 ms
+^C
+---10.10.10.1 ping statistics---
+4 packets transmitted, 4 received, 0% packet loss, time 3088ms
+rtt min/avg/max/mdev = 0.405/0.914/1.636/0.451 ms
+
+mariam-yamen@Mariam-Ubento :~ $ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+^C
+---8.8.8.8 ping statistics---
+4 packets transmitted, 0 received, 100% packet loss, time 3098ms
+
+mariam-yamen@Mariam-Ubento :~ $ ping 10.10.20.1
+PING 10.10.20.1 (10.10.20.1) 56(84) bytes of data.
+64 bytes from 10.10.20.1: icmp_seq=3 ttl=255 time=1.51 ms
+64 bytes from 10.10.20.1: icmp_seq=5 ttl=255 time=0.859 ms
+64 bytes from 10.10.20.1: icmp_seq=6 ttl=255 time=1.17 ms
+^C
+mariam-yamen@Mariam-Ubento :~ $ ping 10.10.20.1
+PING 10.10.20.1 (10.10.20.1) 56(84) bytes of data.
+64 bytes from 10.10.20.1: icmp_seq=1 ttl=255 time=1.99 ms
+64 bytes from 10.10.20.1: icmp_seq=2 ttl=255 time=1.03 ms
+64 bytes from 10.10.20.1: icmp_seq=3 ttl=255 time=0.984 ms
+64 bytes from 10.10.20.1: icmp_seq=4 ttl=255 time=2.06 ms
+^C
+
+---10.10.20.1 ping statistics---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 0.984/1.513/2.055/0.509 ms
